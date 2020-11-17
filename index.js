@@ -17,6 +17,22 @@ app.use(morgan(':method :url :status :res[content-length] :response-time ms :bod
 // parse build
 app.use(express.static('build'))
 
+app.put('/api/persons/:id', (req, res, next) => {
+    const person = req.body
+
+    Phone.findByIdAndUpdate(req.params.id, person, { new: true })
+        .then(updatedPerson => {
+            res.json(updatedPerson)
+        })
+        .catch(err => next(err))
+})
+
+const createErrorHandling = (error, request, response, next) => {
+    response.send(error.JSON)
+}
+
+app.use(createErrorHandling)
+
 app.get('/api/persons', (req, res) => {
     Phone.find()
         .then(phones => {
@@ -59,17 +75,6 @@ app.delete('/api/persons/:id', (req, res, next) => {
         })
         .catch(err => next(err))
 })
-
-app.put('/api/persons/:id', (req, res, next) => {
-    const person = req.body
-
-    Phone.findByIdAndUpdate(req.params.id, person, { new: true })
-        .then(updatedPerson => {
-            res.json(updatedPerson)
-        })
-        .catch(err => next(err))
-})
-
 
 const errorHandler = (error, request, response, next) => {
     console.error(error.message)

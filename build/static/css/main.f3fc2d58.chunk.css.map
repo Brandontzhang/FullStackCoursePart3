@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/css/Alert.css"],"names":[],"mappings":"AAAA,OACI,sBAAuB,CACvB,wBAA4B,CAC5B,aACJ","file":"main.f3fc2d58.chunk.css","sourcesContent":["#alert {\r\n    border: 1px solid green;\r\n    background-color: lightcoral;\r\n    color: turquoise;\r\n}"]}

@@ -1,6 +1,7 @@
-GET https://desolate-stream-33288.herokuapp.com/api/persons/2
+GET http://localhost:3001/api/persons/
 Content-Type: application/json
 
 {
-    "id": 1
+    "name": "Brandon",
+    "number": "2222"
 }

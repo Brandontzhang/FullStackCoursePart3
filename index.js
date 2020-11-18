@@ -24,14 +24,10 @@ app.put('/api/persons/:id', (req, res, next) => {
         .then(updatedPerson => {
             res.json(updatedPerson)
         })
-        .catch(err => next(err))
+        .catch(err => {
+            res.send(err);
+        })
 })
-
-const createErrorHandling = (error, request, response, next) => {
-    response.send(error.JSON)
-}
-
-app.use(createErrorHandling)
 
 app.get('/api/persons', (req, res) => {
     Phone.find()
@@ -57,7 +53,7 @@ app.get('/api/persons/:id', (req, res, next) => {
         .catch(err => { next(err) })
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const person = req.body
 
     const newPerson = new Phone({ ...person })
@@ -77,14 +73,12 @@ app.delete('/api/persons/:id', (req, res, next) => {
 })
 
 const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
-
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
     } else if (error.name === 'ValidationError') {
-        return response.status(400).json({ error: error.message })
+        console.log(error.message)
+        return response.status(400).json(error)
     }
-
     next(error)
 }
 
